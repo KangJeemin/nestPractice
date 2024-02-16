@@ -8,6 +8,6 @@ export class BoardsController {
 
     @Get()
     getAllBoard(){
-        return this.boardsService.getAllBoards
+        return this.boardsService.getAllBoards();
     }
 }
