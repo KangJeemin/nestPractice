@@ -13,8 +13,12 @@ export class BoardsController {
     }
 
     @Post()
-    createBoard(@Body() body){
-        console.log('body',body);
+    createBoard(
+        @Body('title') title:string,
+        @Body('discription') discription:string
+    ):Board{
+        return this.boardsService.createBoard(title,discription)
+        
     }
 
 }

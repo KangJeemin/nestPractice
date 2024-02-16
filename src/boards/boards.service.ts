@@ -20,7 +20,7 @@ export class BoardsService {
             status:BoardStatus.PUBLIC
         }
         this.boards.push(board);
-        return board
+        return board;
     }
 }
  
