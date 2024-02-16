@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { Board } from './boards.model';
 
@@ -11,4 +11,10 @@ export class BoardsController {
     getAllBoard():Board[]{
         return this.boardsService.getAllBoards();
     }
+
+    @Post()
+    createBoard(@Body() body){
+        console.log('body',body);
+    }
+
 }
