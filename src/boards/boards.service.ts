@@ -15,14 +15,29 @@ export class BoardsService {
         private boardRepository: BoardRepository,
     ){
 
+        
     }
     // 다른 클래스에서 board의 접근을 막음
-    // private boards:Board[]=[];
+    // private boards:Board[]=[]; 
 
     // getAllBoards():Board[] {
     //     return this.boards;
     // }
 
+    async createBoard(CreateBoardDto:CreateBoardDto) : Promise<Board>{
+        const {title, description} = CreateBoardDto;
+
+        //데이터베이스에 보낼 객체 생성 
+        const board = this.boardRepository.create({
+            title,
+            description,
+            status:BoardStatus.PUBLIC
+        })
+
+        // 데이터베이스에 값 저장
+        await this.boardRepository.save(board)
+        return board;
+    }
     // createBoard(CreateBoardDto:CreateBoardDto) {
     //     const {title,description} =CreateBoardDto
     //     const board:Board = {
