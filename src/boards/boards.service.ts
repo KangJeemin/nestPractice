@@ -27,16 +27,23 @@ export class BoardsService {
     async createBoard(CreateBoardDto:CreateBoardDto) : Promise<Board>{
         const {title, description} = CreateBoardDto;
 
-        //데이터베이스에 보낼 객체 생성 
-        const board = this.boardRepository.create({
-            title,
-            description,
-            status:BoardStatus.PUBLIC
-        })
-
-        // 데이터베이스에 값 저장
-        await this.boardRepository.save(board)
-        return board;
+        try{
+            //데이터베이스에 보낼 객체 생성 
+            const board = this.boardRepository.create({
+                title,
+                description,
+                status:BoardStatus.PUBLIC
+            })
+    
+            // 데이터베이스에 값 저장
+            await this.boardRepository.save(board)
+            return board;
+        }
+        catch (error){
+            throw new Error(`Failed to create board: ${error.message}`);
+        }
+        
+        
     }
     // createBoard(CreateBoardDto:CreateBoardDto) {
     //     const {title,description} =CreateBoardDto
@@ -65,7 +72,12 @@ export class BoardsService {
     //     }
     //     return found;
     // }
-
+    async deleteBoard(id:number):Promise<void>{
+        const result = await this.boardRepository.delete(id);
+        if(result.affected===0){
+            throw new NotFoundException(`Can't find Board with id= ${id}`)
+        }
+    }
     // deleteBoard(id:string): void{
     //     const found = this.getBoardById(id)
     //     this.boards = this.boards.filter((board)=> board.id !== found.id);
