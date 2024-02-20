@@ -10,6 +10,9 @@ export class BoardStatusValidationPipe implements PipeTransform{
      만약 예외(Exception)가 발생하면 클라이언트에 바로 전해집니다.\
      */
 
+     /*
+     접두사 (prifix) readonly는 속성을 읽기 전용으로 만드는데 사용 됩니다. 앍가 전용 클래스는 외부에서 엑세스 할수 있지만 값을 수정할 수는 없습니다.
+     */
     readonly StatusOption = [
         BoardStatus.PRIVATE,
         BoardStatus.PUBLIC
