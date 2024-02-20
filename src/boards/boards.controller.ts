@@ -15,6 +15,12 @@ export class BoardsController {
     // getAllBoard():Board[]{
     //     return this.boardsService.getAllBoards();
     // }
+    @Get()
+    getAllBoards():Promise<Board>{
+        return this.boardsService.getAllBoards()
+    }
+
+
 
     @Post()
     @UsePipes(ValidationPipe)
