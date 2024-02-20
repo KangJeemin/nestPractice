@@ -13,5 +13,5 @@ export class Board extends BaseEntity {
     descrition: string;
 
     @Column()
-    status:BoardStatus
+    status:BoardStatus;
 }
