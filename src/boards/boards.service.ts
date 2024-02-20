@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Board, BoardStatus } from './board-status.enum';
+import { BoardStatus } from './board-status.enum';
 import { v1 as uuid } from 'uuid'
 import { CreateBoardDto } from './\bdto/create-board.dto';
 
