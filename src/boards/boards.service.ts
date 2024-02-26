@@ -5,14 +5,15 @@ import { CreateBoardDto } from './\bdto/create-board.dto';
 import { BoardRepository } from './board.repository';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Board } from './board.entity';
+import { Repository } from 'typeorm';
 
 //injectable 데코레이터는 다른 컨포넌트에서 이 서비스를 사용할 수 있게 만들어준다.
 @Injectable()
 export class BoardsService {
     constructor(
         // 이 데코레이터를 이용해서 이 서비스에서 BoardRepository를 이용한다고 이걸 boardRepository 변수에 넣어줍니다.
-        @InjectRepository(BoardRepository)
-        private boardRepository: BoardRepository,
+        @InjectRepository(Board)
+        private boardRepository: Repository<Board>,
     ){
 
         
