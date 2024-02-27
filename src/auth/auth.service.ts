@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { AuthCredentialsDto } from './dto/auth-credential.dto';
@@ -15,7 +15,19 @@ export class AuthService {
             try{
                 const { username, password }= authCredentialsDto
                 const user = this.userRepository.create({ username,password });
-                await this.userRepository.save(user);
+                try{
+                    await this.userRepository.save(user);
+                } catch(error) {
+                    if(error.code === '23505') {
+                        throw new ConflictException('Existing username')
+                    }
+                    else{
+                        throw new InternalServerErrorException();
+                    }
+
+                    console.log(error)
+                }
+                
             }
             catch (error) {
                 throw new Error(`Failed to create board: ${error.message}`);
