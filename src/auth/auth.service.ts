@@ -13,7 +13,7 @@ export class AuthService {
         private userRepository:UserRepository,
     ){}
     async signUp(authCredentialsDto:AuthCredentialsDto):Promise<void> {
-            try{
+            
                 const { username, password }= authCredentialsDto
                 const salt = await bcrypt.genSalt();
                 const hashedPassword = await bcrypt.hash(password,salt)
@@ -33,9 +33,5 @@ export class AuthService {
                 }
                 
             }
-            catch (error) {
-                throw new Error(`Failed to create board: ${error.message}`);
-            }
             
-        }  
-    }
+        } 
