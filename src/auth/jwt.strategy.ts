@@ -5,6 +5,9 @@ import { ExtractJwt, Strategy } from "passport-jwt";
 import { User } from "./user.entity";
 import { UserRepository } from "./user.repository";
 import { Repository } from 'typeorm';
+import * as config from 'config'
+
+const dbConfig = config.get('jwt');
 
 // 다른 곳에서도 JwtStrategy를 사용할 수 있도록 의존성을 주입.
 @Injectable()
@@ -16,7 +19,7 @@ export class JwtStrategy extends PassportStrategy(Strategy,'jwt'){
     ){
         super({
             // 토큰이 유효한지 확인.
-            secretOrKey:'Secert1234',
+            secretOrKey:dbConfig.secret,
             // 토큰이 AuthHeader에 위치하고 BearerToken 타입인지 확인. 
             jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken()
         })

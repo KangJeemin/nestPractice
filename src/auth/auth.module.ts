@@ -7,14 +7,15 @@ import { AuthService } from './auth.service';
 import { JwtStrategy } from './jwt.strategy';
 import { User } from './user.entity';
 import { UserRepository } from './user.repository';
-
+import * as config from 'config'
+const dbConfig = config.get('jwt');
 @Module({
   imports :[
     PassportModule.register({defaultStrategy:'jwt'}),
     JwtModule.register({
-      secret:"Secret1234",
+      secret:dbConfig.secret,
       signOptions:{
-        expiresIn: 60 * 60,
+        expiresIn: dbConfig.expiresIn,
       }
     })
     ,TypeOrmModule.forFeature([User])],

@@ -33,8 +33,9 @@ export class BoardsController {
 
     @Post()
     @UsePipes(ValidationPipe)
-    createBoard(@Body() CreateBoardDto:CreateBoardDto, @GetUser() user:User):Promise<Board> {
-        return this.boardsService.createBoard(CreateBoardDto,user)
+    createBoard(@Body() createBoardDto:CreateBoardDto, @GetUser() user:User):Promise<Board> {
+        this.logger.verbose(`User ${user.username} creating a new board. payload: ${JSON.stringify(createBoardDto)}`)
+        return this.boardsService.createBoard(createBoardDto,user)
     }
     // @Post()
     // @UsePipes(ValidationPipe)
