@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Patch, UsePipes, ValidationPipe, ParseIntPipe, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Patch, UsePipes, ValidationPipe, ParseIntPipe, UseGuards, Logger } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { BoardStatus } from './board-status.enum';
 import { CreateBoardDto } from './\bdto/create-board.dto';
@@ -11,8 +11,10 @@ import { User} from '../auth/user.entity'
 @Controller('boards')
 @UseGuards(AuthGuard())
 export class BoardsController {
+    private  logger = new Logger('BoardController');
     // 의존성 주입
     constructor(private boardsService:BoardsService){}
+
 
 
     // @Get('/')
@@ -23,6 +25,7 @@ export class BoardsController {
     getAllBoards(
         @GetUser() user:User
     ):Promise<Board[]>{
+        this.logger.verbose(`User ${user.username} trying to get all Board`)
         return this.boardsService.getAllBoards(user)
     }
 
