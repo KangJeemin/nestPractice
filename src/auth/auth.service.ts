@@ -11,7 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
     constructor(
         @InjectRepository(User)
-        private userRepository:UserRepository,
+        private userRepository:Repository<User>,
         // auth 모듈에 JWT를 등록해주었기 떄문에 Service에서 JWT를 가져올 수 있다. 
         private jwtService:JwtService
     ){}
@@ -43,7 +43,7 @@ export class AuthService {
             // payload 에는 중요한 정보를 넣으면 안 됨.( 탈취 가능성 ) 
             const payload = { username };
             // secret 과 payload를 합쳐서 토큰을 생성함.
-            const accessToken =await this.jwtService.sign(payload);
+            const accessToken = await this.jwtService.sign(payload);
 
             return { accessToken }
         } 

@@ -4,20 +4,19 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { ExtractJwt, Strategy } from "passport-jwt";
 import { User } from "./user.entity";
 import { UserRepository } from "./user.repository";
+import { Repository } from 'typeorm';
 
 // 다른 곳에서도 JwtStrategy를 사용할 수 있도록 의존성을 주입.
 @Injectable()
-
-export class JwtStrategy extends PassportStrategy(Strategy){
+export class JwtStrategy extends PassportStrategy(Strategy,'jwt'){
 // UserRepository의 값을 가쟈올 것이기 떄문에 의존성 주입.
     constructor( 
-        @InjectRepository(UserRepository)
-        private userRepository:UserRepository
+        @InjectRepository(User)
+        private userRepository:Repository<User>,
     ){
         super({
             // 토큰이 유효한지 확인.
-            secretOrkey:'Secert1234',
-
+            secretOrKey:'Secert1234',
             // 토큰이 AuthHeader에 위치하고 BearerToken 타입인지 확인. 
             jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken()
         })
@@ -29,8 +28,10 @@ export class JwtStrategy extends PassportStrategy(Strategy){
     async validate(payload) {
         const {username} = payload
         const user: User = await this.userRepository.findOne({where:{username}})
+        
 
         if(!user) {
+            
             throw new UnauthorizedException()
         }
         return user

@@ -20,7 +20,7 @@ import { UserRepository } from './user.repository';
     ,TypeOrmModule.forFeature([User])],
   controllers: [AuthController],
   // JwtStrategy를 이 Auth 모듈에서 사용할 수 있도록 등록.
-  providers: [AuthService,JwtStrategy],
+  providers: [AuthService,JwtStrategy,JwtModule],
   // JwtStrategy를 다른 모듈에서도 사용할 수 있게 등록
   exports:[JwtStrategy,PassportModule]
 })
